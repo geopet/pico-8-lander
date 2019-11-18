@@ -13,6 +13,7 @@ end
 
 function _draw()
     cls()
+    draw_stars()
     draw_player()
 end
 
@@ -64,6 +65,17 @@ function stay_on_screen()
     if (p.y<0) then          -- top side
         p.y=0
         p.dy=0
+    end
+end
+
+function rndb(low,high)
+    return flr(rnd(high-low+1)+low)
+end
+
+function draw_stars()
+    srand(1)
+    for i=1,50 do
+        pset(rndb(0,127),rndb(0,127),rndb(5,7))
     end
 end
 
