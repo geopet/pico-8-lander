@@ -3,10 +3,12 @@ version 18
 __lua__
 
 function _init()
+    g=0.025         -- gravity
     make_player()
 end
 
 function _update()
+    move_player()
 end
 
 function _draw()
@@ -16,9 +18,9 @@ end
 
 function make_player()
     p={}
-    p.x=60          --position
+    p.x=60          -- position
     p.y=8
-    p.dx=0          --movement
+    p.dx=0          -- movement
     p.dy=0
     p.sprite=1
     p.alive=true
@@ -27,6 +29,13 @@ end
 
 function draw_player()
     spr(p.sprite,p.x,p.y)
+end
+
+function move_player()
+    p.dy+=g         -- add gravity
+
+    p.x+=p.dx       -- actually move the player
+    p.y+=p.dy
 end
 
 __gfx__
