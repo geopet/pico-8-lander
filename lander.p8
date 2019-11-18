@@ -2,6 +2,33 @@ pico-8 cartridge // http://www.pico-8.com
 version 18
 __lua__
 
+function _init()
+    make_player()
+end
+
+function _update()
+end
+
+function _draw()
+    cls()
+    draw_player()
+end
+
+function make_player()
+    p={}
+    p.x=60          --position
+    p.y=8
+    p.dx=0          --movement
+    p.dy=0
+    p.sprite=1
+    p.alive=true
+    p.thrust=0.075
+end
+
+function draw_player()
+    spr(p.sprite,p.x,p.y)
+end
+
 __gfx__
 00000000006666000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000066c76600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
