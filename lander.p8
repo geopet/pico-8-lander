@@ -5,6 +5,7 @@ __lua__
 function _init()
     g=0.025         -- gravity
     make_player()
+    make_stars()
 end
 
 function _update()
@@ -26,6 +27,11 @@ function make_player()
     p.sprite=1
     p.alive=true
     p.thrust=0.075
+end
+
+function make_stars()
+    s={}
+    s.rand=rndb(0,127)
 end
 
 function draw_player()
@@ -73,7 +79,7 @@ function rndb(low,high)
 end
 
 function draw_stars()
-    srand(1)
+    srand(s.rand)
     for i=1,50 do
         pset(rndb(0,127),rndb(0,127),rndb(5,7))
     end
