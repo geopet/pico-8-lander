@@ -18,9 +18,9 @@ end
 
 function make_player()
     p={}
-    p.x=60          -- position
+    p.x=60                   -- position
     p.y=8
-    p.dx=0          -- movement
+    p.dx=0                   -- movement
     p.dy=0
     p.sprite=1
     p.alive=true
@@ -32,12 +32,14 @@ function draw_player()
 end
 
 function move_player()
-    p.dy+=g         -- add gravity
+    p.dy+=g                  -- add gravity
 
     thrust()
 
-    p.x+=p.dx       -- actually move the player
+    p.x+=p.dx                -- actually move the player
     p.y+=p.dy
+
+    stay_on_screen()
 end
 
 function thrust()
@@ -48,6 +50,21 @@ function thrust()
 
     -- thrust sound
     if (btn(0) or btn(1) or btn(2)) sfx(0)
+end
+
+function stay_on_screen()
+    if (p.x<0) then          -- left side
+        p.x=0
+        p.dx=0
+    end
+    if (p.x>119) then        -- right side
+        p.x=119
+        p.dx=0
+    end
+    if (p.y<0) then          -- top side
+        p.y=0
+        p.dy=0
+    end
 end
 
 __gfx__
