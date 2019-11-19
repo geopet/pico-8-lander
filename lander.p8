@@ -5,6 +5,7 @@ __lua__
 function _init()
   g=0.025         -- gravity
   make_player()
+  make_ground()
   make_stars()
 end
 
@@ -14,6 +15,7 @@ end
 
 function _draw()
   cls()
+  draw_ground()
   draw_stars()
   draw_player()
 end
@@ -92,6 +94,43 @@ function draw_stars()
   srand(s.rand)
   for i=1,50 do
     pset(rndb(0,127),rndb(0,127),rndb(5,7))
+  end
+end
+
+function make_ground()
+  -- create the ground
+  gnd={}
+  local top=96             -- highest point
+  local btm=120            -- lowest point
+
+  -- set up the landing pad
+  pad={}
+  pad.width=15
+  pad.x=rndb(0,126-pad.width)
+  pad.y=rndb(top,btm)
+  pad.sprite=2
+
+  -- create ground at pad
+  for i=pad.x,pad.x+pad.width do
+    gnd[i]=pad.y
+  end
+
+  -- create ground right of pad
+  for i=pad.x+pad.width+1,127 do
+    local h=rndb(gnd[i-1]-3,gnd[i-1]+3)
+    gnd[i]=mid(top,h,btm)
+  end
+
+  -- create ground left of pad
+  for i=pad.x-1,0,-1 do
+    local h=rndb(gnd[i+1]-3,gnd[i+1]+3)
+    gnd[i]=mid(top,h,btm)
+  end
+end
+
+function draw_ground()
+  for i=0,127 do
+    line(i,gnd[i],i,127,5)
   end
 end
 
