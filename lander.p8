@@ -15,6 +15,10 @@ function _update()
   if (not game_over) then
     move_player()
     check_land()
+  else
+    if (btnp(5)) then
+      _init()
+    end
   end
 end
 
@@ -26,6 +30,15 @@ function _draw()
 
   print("dx:"..p.dx,2,2,7)
   print("dy:"..p.dy,2,8,7)
+
+  if (game_over) then
+    if (win) then
+      print("you win!",48,48,11)
+    else
+      print("too bad!",48,48,8)
+    end
+    print("press ❎ to play again",20,70,5)
+  end
 end
 
 function make_player()
