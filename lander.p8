@@ -3,6 +3,8 @@ version 18
 __lua__
 
 function _init()
+  game_over=false
+  win=false
   g=0.025         -- gravity
   make_stars()
   make_ground()
@@ -10,7 +12,10 @@ function _init()
 end
 
 function _update()
-  move_player()
+  if (not game_over) then
+    move_player()
+    check_land()
+  end
 end
 
 function _draw()
@@ -18,6 +23,9 @@ function _draw()
   draw_stars()
   draw_ground()
   draw_player()
+
+  print("dx:"..p.dx,2,2,7)
+  print("dy:"..p.dy,2,8,7)
 end
 
 function make_player()
@@ -133,6 +141,33 @@ function draw_ground()
     line(i,gnd[i],i,127,5)
   end
   spr(pad.sprite,pad.x,pad.y,2,1)
+end
+
+function check_land()
+  l_x=flr(p.x)             -- left side of lander
+  r_x=flr(p.x+7)           -- right side of lander
+  b_y=flr(p.y+7)           -- bottom of lander
+
+  over_pad=l_x>=pad.x and r_x<=pad.x+pad.width
+  on_pad=b_y>=pad.y-1
+  slow=p.dy<1
+
+  if (over_pad and on_pad and slow) then
+    end_game(true)
+  elseif (over_pad and on_pad) then
+    end_game(false)
+  else
+    for i=l_x,r_x do
+      if (gnd[i]<=b_y) then
+        end_game(false)
+      end
+    end
+  end
+end
+
+function end_game(won)
+  game_over=true
+  win=won
 end
 
 __gfx__
